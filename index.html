@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моей миледи</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Основные стили */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4); /* Нежно-розовый градиент */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh; /* Чтобы градиент занимал всю высоту экрана */
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-top: 50px;
+            color: white; /* Белый текст для контраста */
+        }
+
+        .message {
+            font-size: 1.5em;
+            margin: 20px 0;
+            color: white; /* Белый текст для контраста */
+        }
+
+        .btn {
+            background: #ff6f61;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #e65a50;
+        }
+
+        /* Стили для аудиоплеера */
+        .audio-player {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .audio-btn {
+            background: #ff6f61;
+            /*border: 2px solid #f3f0ef;*/
+            color: #f3f0ef;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .audio-btn:hover {
+            background: #ff6f61;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Стили для сердечек */
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            animation: fall 5s linear infinite;
+            color: #ff6f61; /* Цвет сердечек */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10%); }
+            100% { transform: translateY(110vh); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Дорогая, мне не хватит и тысячи слов, что бы выразить чувства к тебе.</h1>
+    <p class="message">Ты в моих мыслях каждое утро.</p>
+    <button class="btn" onclick="showMessage()">Обнять</button>
+
+    <!-- Аудиоплеер -->
+    <div class="audio-player">
+        <audio id="audio">
+            <source src="audio.mp3" type="audio/mpeg">
+            Видимо, я что-то сломал в попытках сделать лучше, в любом случае, я все равно могу сказать то что хотел в голосовом сообщении.
+        </audio>
+        <button id="playBtn" class="audio-btn"><i class="fas fa-play"></i></button>
+        <button id="pauseBtn" class="audio-btn"><i class="fas fa-pause"></i></button>
+    </div>
+
+    <script>
+        // Управление аудио
+        const audio = document.getElementById("audio");
+        const playBtn = document.getElementById("playBtn");
+        const pauseBtn = document.getElementById("pauseBtn");
+
+        playBtn.addEventListener("click", () => {
+            audio.play();
+            playBtn.style.display = "none";
+            pauseBtn.style.display = "flex";
+        });
+
+        pauseBtn.addEventListener("click", () => {
+            audio.pause();
+            pauseBtn.style.display = "none";
+            playBtn.style.display = "flex";
+        });
+
+        // Изначально скрываем кнопку паузы
+        pauseBtn.style.display = "none";
+
+        // Сообщения и сердечки
+        const messages = [
+            "Каждый разговор с тобой - островок умиротворения в моей жизни",
+            "Из всевозможных булочек с рисом самая вкусная - ты",
+            "",
+            "Жду с нетерпением нашей встречи!",
+            "Ты – самое прекрасное, что есть в моей жизни."
+        ];
+
+        function showMessage() {
+            const randomIndex = Math.floor(Math.random() * messages.length);
+            document.querySelector('.message').innerText = messages[randomIndex];
+            audio.play(); // Воспроизводим аудио при нажатии на кнопку
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.classList.add('heart');
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
